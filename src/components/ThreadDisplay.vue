@@ -31,14 +31,6 @@ export default {
             users: this.$store.state.users
         }
     },
-    methods: {
-        addPost({post}){
-            const postId = post['.key'];
-            this.$set(this.$store.state.posts, postId, post);
-            this.$set(this.thread.posts, postId, postId);
-            this.$set(this.$store.state.users[post.userId].posts, postId, postId);
-        }
-    },
 }
 </script>
 

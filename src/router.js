@@ -7,6 +7,7 @@ import CategoryListItem from '@/components/CategoryPage'
 // Threads
 
 import ThreadDisplay from './components/ThreadDisplay'
+import Profile from '@/components/Profile'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '*',
       name: 'notfound',
       component: NotFound
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     }
   ]
 })

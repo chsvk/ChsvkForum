@@ -1,5 +1,6 @@
 <template>
     <div class="col-full">
+        <nav-bar/>
         <h1>Welcome to the CHSVK Forum </h1>
         <category-list :categories="categories"/>
     </div>
@@ -7,9 +8,11 @@
 
 <script>
 import CategoryList from './CategoryList'
+import NavBar from './NavBar'
 export default {
   components: {
-      CategoryList
+      CategoryList,
+      NavBar
   },
   computed:{
       categories(){
