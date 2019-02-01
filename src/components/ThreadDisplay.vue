@@ -5,7 +5,7 @@
               By <a href="#">{{users[thread.userId].name}}</a>, <app-date :timeStamp="thread.publishedAt"/>
             </p>
             <post-list :posts="Object.values(threads[id].posts)"/>
-            <post-editor @save="addPost" :id="id"/>
+            <post-editor :id="id"/>
       </div>
 </template>
 

@@ -26,6 +26,7 @@
 
 <script>
 import moment from 'moment'
+import {countObjectProperties} from '@/utils/helpers'
 export default {
     props: {
         postId: {
@@ -38,7 +39,7 @@ export default {
             return this.users[this.posts[this.postId].userId]
         },
         userReplies(){
-            return Object.values(this.user.posts).length;
+            return countObjectProperties(this.user.posts);
         }, 
         posts(){
             return this.$store.state.posts
