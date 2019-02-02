@@ -25,12 +25,16 @@ export default {
     },
     data(){
         return{
-            thread: this.$store.state.threads[this.id],
             threads: this.$store.state.threads,
             posts: this.$store.state.posts,
             users: this.$store.state.users
         }
     },
+    computed: {
+        thread(){
+            return this.$store.state.threads[this.id]
+        }
+    }
 }
 </script>
 
