@@ -32,6 +32,7 @@ export default {
     },
     methods: {
         save({title, text}){
+            var vm = this;
             // Dispatch Action in Store to create new Thread
             this.$store.dispatch('updateThread', {text, title, threadId: this.id}).then((thread)=>{
                 this.$router.push({

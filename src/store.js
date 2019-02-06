@@ -60,6 +60,21 @@ export default new Vuex.Store({
         resolve(newThread)
       })
     },
+    updatePost({state,commit}, {postId, text}){
+      return new Promise((resolve, reject)=>{
+         const post = state.posts[postId]
+         commit('setPost', {
+          postId: postId,
+          post: {...post, text,
+          edited: {
+            at: Math.floor(Date.now()/1000),
+            by: state.authId
+          }
+        }
+        })
+         resolve(post);
+      })
+    },  
     updateUser({commit}, user){
       commit('setUser', {userId: user['.key'], user})
     }
