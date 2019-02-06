@@ -4,9 +4,13 @@ import Hello from './components/Hello'
 import NotFound from './components/NotFound'
 import Forum from '@/components/ForumDisplay'
 import CategoryListItem from '@/components/CategoryPage'
+
+
 // Threads
 
 import ThreadDisplay from './components/ThreadDisplay'
+import ThreadCreate from './components/ThreadCreate'
+import PageThreadEdit from './components/ThreadEditorPage'
 import Profile from '@/components/Profile'
 
 Vue.use(Router)
@@ -33,9 +37,21 @@ export default new Router({
       props: true
     },
     {
+      path: '/thread/create/:forumId',
+      name: 'ThreadCreate',
+      component: ThreadCreate,
+      props: true
+    },
+    {
       path: '/thread/:id',
       name: 'ThreadDisplay',
       component: ThreadDisplay,
+      props: true
+    },
+    {
+      path: '/thread/:id/edit',
+      name: 'ThreadEditorPage',
+      component: PageThreadEdit,
       props: true
     },
     {

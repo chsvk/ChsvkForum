@@ -1,6 +1,11 @@
 <template>
      <div class="col-large push-top">
             <h1>{{thread.title}}</h1>
+            <router-link
+                :to="{name: 'ThreadEditorPage', threadId: this.id}"
+                class="btn-green btn-small"
+                tag="button"
+            > Edit Thread </router-link>
             <p class="text-faded text-xsmall">
               By <a href="#">{{users[thread.userId].name}}</a>, <app-date :timeStamp="thread.publishedAt"/>
             </p>
