@@ -7,7 +7,8 @@
                 tag="button"
             > Edit Thread </router-link>
             <p class="text-faded text-xsmall">
-              By <a href="#">{{users[thread.userId].name}}</a>, <app-date :timeStamp="thread.publishedAt"/>
+                By <a href="#">{{userName}}</a>, <app-date :timeStamp="thread.publishedAt"/>
+                <span style="float:right; margin-top: 2px;" class="hide-mobile text-faded text-small">{{repliesCount}} replies by {{contributors}} {{contributors>1? 'Contributors': 'Contributor'}}</span>
             </p>
             <post-list :posts="Object.values(threads[id].posts)"/>
             <post-editor :id="id"/>
@@ -38,6 +39,15 @@ export default {
     computed: {
         thread(){
             return this.$store.state.threads[this.id]
+        },
+        repliesCount(){
+            return this.$store.getters.threadRepliesCount(this.thread['.key']);
+        },
+        contributors(){
+            return this.$store.getters.contributorsCount(this.thread['.key'])
+        },
+        userName(){
+            return this.$store.state.users[this.thread.userId].name
         }
     }
 }

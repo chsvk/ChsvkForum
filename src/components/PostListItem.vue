@@ -7,6 +7,7 @@
                           <img class="avatar-large" :src="user.avatar" alt="">
                       </a>
 
+                      <p class="desktop-only text-small">{{userThreadCount}} Threads</p>
                       <p class="desktop-only text-small">{{userReplies}} Replies</p>
                   </div>
 
@@ -35,7 +36,6 @@
 <script>
 import moment from 'moment'
 import PostEditor from './PostEditor'
-import {countObjectProperties} from '@/utils/helpers'
 export default {
     components: {
         PostEditor
@@ -56,13 +56,16 @@ export default {
             return this.users[this.post.userId]
         },
         userReplies(){
-            return countObjectProperties(this.user.posts);
+            return this.$store.getters.userPostCount(this.post.userId);
         }, 
         post(){
             return this.$store.state.posts[this.postId]
         },
         users(){
             return this.$store.state.users
+        },
+        userThreadCount(){
+            return this.$store.getters.userThreadCount(this.user['.key'])
         }
     },
 }

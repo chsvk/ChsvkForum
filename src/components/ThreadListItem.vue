@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import {countObjectProperties} from '@/utils/helpers'
 export default {
     props: {
         thread: {
@@ -42,12 +41,9 @@ export default {
             return this.$store.state.users[this.thread.userId]
         },
         repliesCount(){
-            return countObjectProperties(this.thread.posts) - 1
+            return this.$store.getters.threadRepliesCount(this.thread['.key']);
         }
     },
-    mounted(){
-        this.thread;
-    }
 }
 </script>
 

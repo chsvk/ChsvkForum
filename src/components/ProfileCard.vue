@@ -48,14 +48,14 @@ export default {
             required: true,
             type: Object
         },
-        userPostsCount: {
-            required: true,
-            type: Number
+    },
+    computed: {
+        userPostsCount(){
+            return this.$store.getters.userPostCount(this.user['.key'])
         },
-        userThreadsCount: {
-            required: true,
-            type: Number
-        }
+        userThreadsCount(){
+            return this.$store.getters.userThreadCount(this.user['.key'])
+        },
     }
 }
 </script>

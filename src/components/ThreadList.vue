@@ -20,7 +20,6 @@ export default {
         ThreadListItem
     },
     mounted(){
-       console.log(this.ThreadList); 
     }
 }
 </script>

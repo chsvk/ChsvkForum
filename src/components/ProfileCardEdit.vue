@@ -58,19 +58,19 @@ export default {
             required: true,
             type: Object
         },
-        userPostsCount: {
-            required: true,
-            type: Number
-        },
-        userThreadsCount: {
-            required: true,
-            type: Number
-        }
     },
     data(){
         return{
             activeUser: {...this.user}
         }
+    },
+    computed: {
+        userPostsCount(){
+            return this.$store.getters.userPostCount(this.user['.key'])
+        },
+        userThreadsCount(){
+            return this.$store.getters.userThreadCount(this.user['.key'])
+        },
     },
     methods: {
         save(){
