@@ -36,6 +36,7 @@ import PostList from './PostList'
 import ProfileCard from './ProfileCard'
 import ProfileCardEdit from './ProfileCardEdit'
 import {mapGetters} from 'vuex'
+// import store from '@/Store/store'
 export default {
     props: {
         edit: {
@@ -58,6 +59,20 @@ export default {
             : []
         }
     },
+    //  The commented methods have been shifted to router.js file.
+    // beforeRouteEnter(to, from, next){
+    //     if(store.state.authId){
+    //         next()
+    //     }else{
+    //         next('/')
+    //     }
+    // },
+    beforeRouteUpdate(to, from, next){
+
+    },
+    beforeRouteLeave(to, from, next){
+
+    }
 }
 </script>
 

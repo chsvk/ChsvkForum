@@ -7,6 +7,9 @@ import CategoryListItem from '@/components/CategoryPage'
 import Register from '@/components/Registration'
 import Login from '@/components/Login'
 
+// Store
+import Store from '@/Store/store'
+
 // Threads
 
 import ThreadDisplay from './components/ThreadDisplay'
@@ -74,13 +77,27 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: Profile,
-      props: true
+      props: true,
+      beforeEnter(to, from, next){
+        if(Store.state.authId){
+          next()
+        }else{
+          next('/')
+        }
+      }
     },
     {
       path: '/profile/edit',
       name: 'profileEdit',
       component: Profile,
       props: {edit: true}
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      beforeEnter(to, from , next){
+        Store.dispatch('signOut');
+      }
     }
   ]
 })
