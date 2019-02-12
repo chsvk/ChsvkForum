@@ -1,5 +1,5 @@
 <template>
-      <header v-if="user" class="header" id="header">
+      <header class="header" id="header">
 
         <a href="/" class="logo">
             <img src="../assets/vueSchool.svg" >
@@ -14,27 +14,36 @@
 
     <!-- use .navbar-open to open nav -->
     <nav class="navbar">
-        <ul>
-
+        <ul v-if="user">
             <li class="navbar-user">
-                <router-link :to="{name: 'profile'}">
+                <a @click="displayDropDown =!displayDropDown">
                     <img class="avatar-small" :src="user.avatar" alt="">
                     <span>
                         {{user.name}}
                         <img class="icon-profile" src="../assets/arrow-profile.svg" alt="">
                     </span>
-                </router-link>
+                </a>
 
                 <!-- dropdown menu -->
                 <!-- add class "active-drop" to show the dropdown -->
-                <div id="user-dropdown">
+                <div id="user-dropdown" :class="{'active-drop': displayDropDown}">
                     <div class="triangle-drop"></div>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-menu-item"><a href="profile.html">View profile</a></li>
-                        <li class="dropdown-menu-item"><a href="#">Log out</a></li>
-                    </ul>
+                        <li class="dropdown-menu-item">
+                            <router-link :to="{name: 'profile'}">View Profile</router-link>
+                        </li>
+                        <li class="dropdown-menu-item">
+                            <a @click.prevent="$store.dispatch('signOut')">Sign Out</a>
+                        </li> 
+                        
+                   </ul>
                 </div>
             </li>
+            
+        </ul>
+        <ul class="loginNav" v-else>
+            <router-link :to="{name: 'login'}">Sign In</router-link>
+            <router-link :to="{name: 'register'}">Register</router-link>
         </ul>
 
         <!-- <ul>
@@ -65,17 +74,32 @@
 <script>
 import {mapGetters} from 'vuex'
 export default {
+    data(){
+        return{
+            displayDropDown: false
+        }
+    },
     computed: {
         ...mapGetters({
             'user': 'authUser'
         })
     },
     mounted(){
-
+        console.log(this.user)
     }
 }
 </script>
 
-<style>
 
+<style lang="scss" scoped>
+    .header{
+        .loginNav{
+            a{
+                color: white;
+                padding: 0 1em;
+            }
+        }
+    }
 </style>
+
+

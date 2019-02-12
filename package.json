@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "seed": "firebase database:set / src/Data.json -y"
   },
   "dependencies": {
     "firebase": "^5.8.2",

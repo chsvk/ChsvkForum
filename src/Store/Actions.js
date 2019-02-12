@@ -1,6 +1,49 @@
 import firebase from 'firebase'
 
 export default {
+
+        createUser({state, commit}, {email, name, username, id, avatar = null}){
+          return new Promise((resolve, reject)=> {
+            const registeredAt = Math.floor(Date.now()/1000)
+            const usernameLower = username.toLowerCase()
+            email = email.toLowerCase()
+            const user = {registeredAt, username, usernameLower, name, email, avatar}
+            firebase.database().ref('users').child(id).set(user).then(()=>{
+              commit('setItem', {resource: 'users', id, item: user})
+              resolve(state.users[id]);
+            })
+
+          })
+        },
+
+        fetchAuthUser({dispatch, commit}){
+          const userId = firebase.auth().currentUser.uid;
+          return dispatch('fetchUser', {id: userId}).then(()=>{
+            commit('setAuthId', {id: userId})
+          })
+
+        },
+
+
+        registerUserWithEmailAndPassword({dispatch}, {email, name, username, avatar, password}){
+          return firebase.auth().createUserWithEmailAndPassword(email, password).then((response)=>{
+            console.log(response.user);
+            dispatch('createUser', {email, name, username, avatar, id: response.user.uid})
+          })
+        },  
+
+
+        loginUserWithEmailAndPassword({dispatch}, {email, password}){
+          return firebase.auth().signInWithEmailAndPassword(email, password)
+        },
+
+        signOut({commit}){
+          return firebase.auth().signOut().then(()=>{
+            commit('setAuthId', undefined)
+          })
+        },
+
+
         createPost({commit, state}, post){
           const postId = firebase.database().ref().push().key
           post.userId = state.authId;

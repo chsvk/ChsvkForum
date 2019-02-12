@@ -4,7 +4,8 @@ import Hello from './components/Hello'
 import NotFound from './components/NotFound'
 import Forum from '@/components/ForumDisplay'
 import CategoryListItem from '@/components/CategoryPage'
-
+import Register from '@/components/Registration'
+import Login from '@/components/Login'
 
 // Threads
 
@@ -23,6 +24,16 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Hello
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     },
     {
       path: '/category/:categoryId',
