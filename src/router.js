@@ -19,7 +19,7 @@ import Profile from '@/components/Profile'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -78,13 +78,7 @@ export default new Router({
       name: 'profile',
       component: Profile,
       props: true,
-      beforeEnter(to, from, next){
-        if(Store.state.authId){
-          next()
-        }else{
-          next('/')
-        }
-      }
+      meta: {requiresAuth: true},
     },
     {
       path: '/profile/edit',
@@ -101,3 +95,19 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from ,next)=> {
+  console.log('🚥 Navigation to ' + to.name + "From " + from.name)
+  if(to.matched.some(route=> route.meta.requiresAuth)){
+    if(Store.state.authId){
+      next()
+    }else{
+      next(false)
+    }
+  }
+    else{
+      next()
+    }
+})
+
+export default router;
