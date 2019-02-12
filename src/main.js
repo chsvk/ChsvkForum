@@ -1,16 +1,32 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './Store/store'
 import './registerServiceWorker'
 import AppDate from './components/AppDate'
 
+import firebase from 'firebase'
+
 Vue.component('AppDate', AppDate)
+
+const config = {
+  apiKey: "AIzaSyCDjgIupXGSmKFfDev00wm-mHRbxCw82gs",
+  authDomain: "chsvkforum.firebaseapp.com",
+  databaseURL: "https://chsvkforum.firebaseio.com",
+  projectId: "chsvkforum",
+  storageBucket: "chsvkforum.appspot.com",
+  messagingSenderId: "236067532231"
+};
+firebase.initializeApp(config);
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate(){
+    store.dispatch('fetchUser', {id: store.state.authId}).then((user)=> {
+    })
+  }
 }).$mount('#app')

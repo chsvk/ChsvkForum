@@ -1,5 +1,5 @@
 <template>
-    <div class="col-full push-top">
+    <div v-if="thread && text" class="col-full push-top">
 
           <h1>Editing <i>{{thread.title}}</i></h1>
 
@@ -27,8 +27,16 @@ export default {
             return this.$store.state.threads[this.id]
         },
         text(){
-            return this.$store.state.posts[this.thread.firstPostId].text
+            const post = this.$store.state.posts[this.thread.firstPostId]
+            return post? post.text: null
         }
+    },
+    created(){
+        console.log(this.id)
+        this.$store.dispatch('fetchThread', {id: this.id}).then(thread => {
+            console.log(thread.firstPostId)
+            this.$store.dispatch('fetchPost', {id: thread.firstPostId})
+        })
     },
     methods: {
         save({title, text}){

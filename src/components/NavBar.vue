@@ -1,5 +1,5 @@
 <template>
-      <header class="header" id="header">
+      <header v-if="user" class="header" id="header">
 
         <a href="index.html" class="logo">
             <img src="../assets/vueSchool.svg" >
@@ -70,6 +70,9 @@ export default {
             'user': 'authUser'
         })
     },
+    mounted(){
+
+    }
 }
 </script>
 

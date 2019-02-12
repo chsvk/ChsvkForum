@@ -1,5 +1,5 @@
 <template>
-     <div class="col-large push-top">
+     <div v-if="!loading" class="col-large push-top">
             <h1>{{thread.title}}</h1>
             <router-link
                 :to="{name: 'ThreadEditorPage', threadId: this.id}"
@@ -15,9 +15,10 @@
       </div>
 </template>
 
-<script>
+<script>  
 import PostList from './PostList'
 import PostEditor from './PostEditor'
+import {countObjectProperties} from '@/utils/helpers'
 export default {
     props: {
         id: {
@@ -25,12 +26,31 @@ export default {
             type: String
         }
     },
+    data(){
+        return{
+
+        }
+    },
     components: {
         PostList,
         PostEditor
     },
+    created(){
+        var vm = this;
+        // fetching threads
+            this.$store.dispatch('fetchThread', {id: this.id}).then(thread=>{
+                this.$store.dispatch('fetchUser', {id: thread.userId})
+                this.$store.dispatch('fetchPosts', {ids: Object.keys(thread.posts)}).then((posts)=>{
+                    posts.forEach(post => {
+                        this.$store.dispatch('fetchUser', {id: post.userId})
+                        vm.loading = false;
+                    })
+                })
+            })
+    },
     data(){
         return{
+            loading: true,
             threads: this.$store.state.threads,
             posts: this.$store.state.posts,
             users: this.$store.state.users
@@ -44,11 +64,13 @@ export default {
             return this.$store.getters.threadRepliesCount(this.thread['.key']);
         },
         contributors(){
-            return this.$store.getters.contributorsCount(this.thread['.key'])
+            console.log(countObjectProperties(this.thread.contributors))
+            return countObjectProperties(this.thread.contributors);
         },
         userName(){
-            return this.$store.state.users[this.thread.userId].name
-        }
+            return (this.$store.state.users[this.thread.userId].name)
+        },
+    
     }
 }
 </script>

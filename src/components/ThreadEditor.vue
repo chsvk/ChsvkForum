@@ -37,6 +37,8 @@ export default {
             }
         }
     },
+    created(){
+    },
     computed: {
         isUpdate(){
             return !!this.title

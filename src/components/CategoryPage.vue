@@ -1,5 +1,5 @@
 <template>
-    <div class="col-full">
+    <div v-if="category" class="col-full">
         <h1>{{category.name}}</h1>
         <category-list-item :categoryId="categoryId"/>
     </div>
@@ -16,6 +16,11 @@ export default {
             required: true,
             type: String
         }
+    },
+    created(){
+        this.$store.dispatch('fetchCategory', {id: this.categoryId}).then((category)=> {
+            this.$store.dispatch('fetchForums', {ids: category.forums})
+        })
     },
     computed:{
         category(){

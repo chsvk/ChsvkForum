@@ -1,5 +1,5 @@
 <template>
-    <div class="forum-listing">
+    <div v-if="forum" class="forum-listing">
                   <div class="forum-details">
                       <router-link :to="{name: 'Forums', params: {id: forum['.key']}}" class="text-xlarge">{{forum.name}}</router-link>
                       <p>{{forum.description}}</p>
