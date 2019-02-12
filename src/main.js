@@ -4,10 +4,14 @@ import router from './router'
 import store from './Store/store'
 import './registerServiceWorker'
 import AppDate from './components/AppDate'
+import VueSpinners from 'vue-spinners'
+
 
 import firebase from 'firebase'
 
 Vue.component('AppDate', AppDate)
+
+Vue.use(VueSpinners)
 
 const config = {
   apiKey: "AIzaSyCDjgIupXGSmKFfDev00wm-mHRbxCw82gs",

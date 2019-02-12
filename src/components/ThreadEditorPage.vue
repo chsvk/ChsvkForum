@@ -1,5 +1,5 @@
 <template>
-    <div v-if="thread && text" class="col-full push-top">
+    <div v-if="dataStatus_ready" class="col-full push-top">
 
           <h1>Editing <i>{{thread.title}}</i></h1>
 
@@ -12,7 +12,9 @@
 
 <script>
 import ThreadEditor from './ThreadEditor'
+import DataStatus from '@/Mixins/DataStatus'
 export default {
+    mixins: [DataStatus],
     components:{
         ThreadEditor
     },
@@ -32,10 +34,12 @@ export default {
         }
     },
     created(){
-        console.log(this.id)
+        var vm = this;
         this.$store.dispatch('fetchThread', {id: this.id}).then(thread => {
             console.log(thread.firstPostId)
-            this.$store.dispatch('fetchPost', {id: thread.firstPostId})
+            this.$store.dispatch('fetchPost', {id: thread.firstPostId}).then(()=>{
+                vm.dataStatus_fetched();
+            })
         })
     },
     methods: {

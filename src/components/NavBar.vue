@@ -1,7 +1,7 @@
 <template>
       <header v-if="user" class="header" id="header">
 
-        <a href="index.html" class="logo">
+        <a href="/" class="logo">
             <img src="../assets/vueSchool.svg" >
         </a>
 

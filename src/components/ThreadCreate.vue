@@ -1,5 +1,5 @@
 <template>
-    <div v-if="forum" class="col-full push-top">
+    <div v-if="dataStatus_ready" class="col-full push-top">
 
           <h1>Create new thread in <i>{{forum.name}}</i></h1>
 
@@ -9,7 +9,9 @@
 
 <script>
 import ThreadEditor from './ThreadEditor'
+import DataStatus from '@/Mixins/DataStatus'
 export default {
+    mixins: [DataStatus],
     components:{
         ThreadEditor
     },
@@ -20,7 +22,9 @@ export default {
         }
     },
     created(){
-        this.$store.dispatch('fetchForum', {id: this.forumId})
+        this.$store.dispatch('fetchForum', {id: this.forumId}).then(()=>{
+            this.dataStatus_fetched();
+        })
     },
     methods: {
         save({title, text}){

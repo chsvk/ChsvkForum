@@ -1,5 +1,5 @@
 <template>
-     <div v-if="!loading" class="col-large push-top">
+     <div v-if="dataStatus_ready" class="col-large push-top">
             <h1>{{thread.title}}</h1>
             <router-link
                 :to="{name: 'ThreadEditorPage', threadId: this.id}"
@@ -19,7 +19,9 @@
 import PostList from './PostList'
 import PostEditor from './PostEditor'
 import {countObjectProperties} from '@/utils/helpers'
+import DataStatus from '@/Mixins/DataStatus'
 export default {
+    mixins: [DataStatus],
     props: {
         id: {
             required: true,
@@ -43,8 +45,8 @@ export default {
                 this.$store.dispatch('fetchPosts', {ids: Object.keys(thread.posts)}).then((posts)=>{
                     posts.forEach(post => {
                         this.$store.dispatch('fetchUser', {id: post.userId})
-                        vm.loading = false;
                     })
+                    vm.dataStatus_fetched();
                 })
             })
     },

@@ -1,5 +1,5 @@
 <template>
-     <div v-if="forum && threads" class="forum_wrapper">
+     <div v-if="dataStatus_ready" class="forum_wrapper">
       <div class="col-full push-top">  
           <div class="forum-header">
               <div class="forum-details">
@@ -15,7 +15,9 @@
 
 <script>
 import ThreadList from './ThreadList'
+import DataStatus from '@/Mixins/DataStatus'
 export default {
+    mixins: [DataStatus],
     components: {
         ThreadList
     },
@@ -25,11 +27,13 @@ export default {
             type: String
         }
     },
-    created(){
+    created(){var vm = this;
         this.$store.dispatch('fetchForum', {id: this.id}).then((forum)=> {
             this.$store.dispatch('fetchThreads', {ids: forum.threads}).then((threads)=> {
                 threads.forEach(thread => {
-                    this.$store.dispatch('fetchUser', {id: thread.userId})
+                    this.$store.dispatch('fetchUser', {id: thread.userId}).then(()=>{
+                        vm.dataStatus_fetched()
+                    })
                 })
             })
         })
